@@ -1,6 +1,30 @@
-.person__container {
+.yellowBackground {
+	background-color: lightyellow;
 	width: 233px;
 	height: 333px;
 	border: 1px black solid;
+	border-radius: 5px;
+	margin: 1%;
+	padding: 25px 10px 10px 10px;
 	float: left;
+}
+
+.blueBackground {
+	background-color: lightblue;
+	width: 233px;
+	height: 333px;
+	border: 1px black solid;
+	border-radius: 5px;
+	margin: 1%;
+	padding: 25px 10px 10px 10px;
+	float: left;
+}
+
+.selectedField {
+	border: 2px dotted red;
+}
+
+person div {
+	width: 100%;
+	background-color: white;
 }
