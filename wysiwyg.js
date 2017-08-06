@@ -1,5 +1,4 @@
-console.log("wysiwyg.js");
-
+// console.log("wysiwyg.js");
 
 let coolCats = [
 {
@@ -59,28 +58,26 @@ let coolCats = [
 
 ];
 
-console.log("coolCats", coolCats);
-
-
-
-// example code
+// ****** CREATE VARIABLES TO BE USED THROUGHOUT ****** //
 var counter = 0;
 var backgroundColor;
-var outputEl = document.getElementById("outputEl");
 var toModify;
 
-for (; counter < 5; counter++) {
-  // Give each person element a unique identifier
+// ****** CREATE VARABLES TO ADDRESS PARTS OF DOM ****** //
+var outputEl = document.getElementById("outputEl");
+var containerEl = document.getElementsByTagName("PERSON");
 
+// ****** CREATE CARDS BY COUNTER, GIVE EACH CARD AN INDEX, AND SET BACKGROUND COLOR ****** //
+for (; counter < 5; counter++) {
+
+// ****** SET BACKGROUND COLOR BASED ON COUNTER ****** //
   if (((counter + 1) % 2) === 0) {
   	backgroundColor = "yellowBackground";
-  	console.log("backgroundColor", backgroundColor);
   } else {
   	backgroundColor = "blueBackground";
-  	console.log("backgroundColor", backgroundColor);
   }
 
-
+// ****** PRINT CARDS TO DOM ****** //
   outputEl.innerHTML += `<person class=${backgroundColor} id="${counter}">
 							  <header>
 							  	<div class="name">${coolCats[counter].name}</div>
@@ -103,22 +100,11 @@ for (; counter < 5; counter++) {
 						</person>`;
 }
 
-// Now containerEl will have elements in it
-var containerEl = document.getElementsByTagName("PERSON");
-
-// Event listeners are created
+// ****** CREATE EVENT LISTENER TO TRACK CLICKS ON CARDS ****** //
 for (var i = 0; i < containerEl.length; i++) {
   containerEl[i].addEventListener("click", function (event) {
-    // Logic to execute when the element is clicked
-    console.log("event.target", event.target);
-    console.log("event.target.parentElement", event.target.parentElement);
-    console.log("event.target.parentElement.parentElement", event.target.parentElement.parentElement);
-    console.log("event.target.parentElement.parentElement.parentElement", event.target.parentElement.parentElement.parentElement);
-    console.log("event.target.parentElement.parentElement.parentElement.id", event.target.parentElement.parentElement.parentElement.id);
-    console.log("event.target.innerHTML", event.target.innerHTML);
-    console.log("event.target.className", event.target.className);
-    console.log("*** event.target.classList.item(0)", event.target.classList.item(0));
-
+    
+    // ****** REMOVE DIV HIGHLIGHT WHEN ANOTHER DIV CLICKED ****** //
     if (event.target.tagName === "DIV") {
     	let allInfoHolders = document.getElementsByTagName("DIV");
     	for (var i = 0; i < allInfoHolders.length; i++) {
@@ -126,81 +112,47 @@ for (var i = 0; i < containerEl.length; i++) {
     	};
 
 
-    	console.log("event.currentTarget", event.currentTarget);
-    	console.log("event.currentTarget.children", event.currentTarget.children);
-    	console.log("event.currentTarget.children.className", event.currentTarget.children.className);
-
-    	// event.target.classList.toggle("infoHolder");
+    	// ****** ADD HIGHLIGHT WHEN DIV CLICKED ****** //
     	event.target.classList.add("selectedField");
+
+    	// ****** ADD VALUE TO VARIABLES TO HOLD TARGET OF CLICKED DIV ****** //
     	toModify = event.target;
     	toModifyContainer = event.currentTarget;
 
-    	console.log("toModify", toModify);
+    	// ****** SET FOCUS ON INPUT FIELD AND SET VARIABLE TO TAKE INPUT TEXT ****** //
     	document.getElementById("inputField").focus();
-
     	let inputText = document.getElementById("inputField");
 
-
+    	// ****** ADD EVENT LISTENER FOR KEY ENTRY IN INPUT FIELD ****** //
 		inputText.addEventListener("keyup", function(event) {
 			if (event.keyCode === 13) {
+
+				// ****** ADD INFORMATION IN INPUT FIELD TO OBJECT ASSOCIATED WITH CARD ****** //
 				if (toModify) {
-					console.log("alert - enter key triggered");
-					console.log("toModify.classList.item(0)", toModify.classList.item(0));
 					let objKey = toModify.classList.item(0);
-					console.log("toModifyContainer.id", toModifyContainer.id);
-					console.log("objKey", objKey);
 					objId =  toModifyContainer.id;
-					console.log("event.target.value", event.target.value);
-					// coolCats[objId].objKey = event.target.value;
-					console.log("coolCats[objId]", coolCats[objId]);
-					console.log("coolCats[objId][objKey]", coolCats[objId][objKey]);
 					coolCats[objId][objKey] = event.target.value;
-					// console.log("toObject", toObject);
 					event.target.value = "";
 					toModify = "";
-
-
 				};
 			} else {
-			console.log("event", event);
-			console.log("event.target", event.target);
-			// console.log("getElementsByClassName('selectedField')", getElementsByClassName('selectedField'));
-			console.log("toModify x2", toModify);
-			console.log("event.target.value", event.target.value);
-			console.log("event.target.innerHTML", event.target.innerHTML);
-			toModify.innerHTML = event.target.value;
+				// ****** SET DOM ELEMENT TO INPUT FIELD ****** //
+				toModify.innerHTML = event.target.value;
 			}
 		});
     }
   });
 };
 
+// ****** CREATE EVENT LISTENER TO TRACK LOST FOCUS FOR INPUT FIELD ****** //
 document.getElementById("inputField").addEventListener("blur", function() {
-	console.log("event.target.value and event.target on losefocus", event.target.value, event.target);
 
+	// ****** ADD INFORMATION IN INPUT FIELD TO OBJECT ASSOCIATED WITH CARD ****** //
 	if (toModify) {
-		console.log("toModify is not true");
 		let objKey = toModify.classList.item(0);
-		console.log("toModifyContainer.id", toModifyContainer.id);
-		console.log("objKey", objKey);
 		objId =  toModifyContainer.id;
-		console.log("event.target.value", event.target.value);
-		// coolCats[objId].objKey = event.target.value;
-		console.log("coolCats[objId]", coolCats[objId]);
-		console.log("coolCats[objId][objKey]", coolCats[objId][objKey]);
 		coolCats[objId][objKey] = event.target.value;
-
 		event.target.value = "";
 		toModify = "";
-		console.log("alert - focusout triggered");
 	};
 });
-
-
-
-// let inputArea = document.getElementById("keypress-input");
-
-// inputArea.addEventListener("keyup", function(event){
-// 	console.log("event", event);
-// 	saywhat.innerHTML = event.target.value;
-// });
